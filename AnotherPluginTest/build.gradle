@@ -1,0 +1,10 @@
+task deploy(dependsOn: build) {
+    copy {
+        from "$buildDir/libs/" + archivesBaseName + ".jar"
+        into "$rootDir/plugins/another/"
+    }
+}
+
+dependencies {
+    compileOnly parent
+}
