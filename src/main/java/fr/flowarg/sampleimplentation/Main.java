@@ -1,5 +1,6 @@
 package fr.flowarg.sampleimplentation;
 
+import fr.flowarg.flowlogger.Logger;
 import fr.flowarg.pluginloaderapi.PluginLoaderAPI;
 import fr.flowarg.pluginloaderapi.api.Task;
 import fr.flowarg.pluginloaderapi.plugin.PluginLoader;
@@ -10,8 +11,11 @@ public class Main
 {
     public static void main(String[] args) throws InterruptedException
     {
+        // Set custom logger BEFORE OPERATIONS
+        PluginLoaderAPI.setLogger(new Logger("[SampleImplementation]", new File(".", "plugins/logs.log")));
+
         final PluginLoader testPluginLoader = new PluginLoader("Test", new File(".", "plugins"), Main.class);
-        final PluginLoader anotherPluginLoader = new PluginLoader("Another", new File(".", "plugins/another"), Main.class, new APIImplementation());
+        final PluginLoader anotherPluginLoader = new PluginLoader("Another", new File(".", "plugins/another"), Main.class, APIImplementation::new);
 
         PluginLoaderAPI.registerPluginLoader(testPluginLoader).complete();
         PluginLoaderAPI.registerPluginLoader(anotherPluginLoader).complete();
@@ -27,7 +31,7 @@ public class Main
             return false;
         }).complete();
         // Replace "stop" by "exit"
-        PluginLoaderAPI.addShutdownTrigger(pluginLoaders -> PluginLoaderAPI.getScanner().nextLine().equalsIgnoreCase("exit")).complete();
+        PluginLoaderAPI.addShutdownTrigger(pluginLoaders -> PluginLoaderAPI.SCANNER.nextLine().equalsIgnoreCase("exit")).complete();
 
         final Task<Void> readyTask = PluginLoaderAPI.ready(Main.class);
         PluginLoaderAPI.getLogger().debug("Before the task: " + readyTask.toJson());

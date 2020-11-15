@@ -12,7 +12,7 @@ public class AnotherPluginTest extends Plugin
         // API SAMPLE
         this.getLogger().info(this.getPluginName() + " using API " + this.getApi().getAPIName() + "...");
         if(this.getApi() instanceof APIImplementation)
-            this.getLogger().info("API UUID: " + ((APIImplementation)this.getApi()).getRandomUUID());
+            this.getLogger().info("API UUID: " + this.getApi().subAPI().get());
 
         this.getLogger().info("Another plugin test json: " + this.toJson());
     }

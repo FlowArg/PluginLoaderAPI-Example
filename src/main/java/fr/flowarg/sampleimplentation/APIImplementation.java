@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import fr.flowarg.pluginloaderapi.api.IAPI;
 
 import java.util.UUID;
+import java.util.function.Supplier;
 
 public class APIImplementation implements IAPI
 {
@@ -12,6 +13,12 @@ public class APIImplementation implements IAPI
     APIImplementation()
     {
         this.randomUUID = UUID.randomUUID().toString();
+    }
+
+    @Override
+    public Supplier<Object> subAPI()
+    {
+        return () -> this.randomUUID;
     }
 
     @Override
