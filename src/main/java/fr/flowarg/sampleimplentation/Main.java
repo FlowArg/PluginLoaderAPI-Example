@@ -9,7 +9,7 @@ import java.io.File;
 
 public class Main
 {
-    public static void main(String[] args) throws InterruptedException
+    public static void main(String[] args)
     {
         // Set custom logger BEFORE OPERATIONS
         PluginLoaderAPI.setLogger(new Logger("[SampleImplementation]", new File(".", "plugins/logs.log")));
@@ -36,10 +36,20 @@ public class Main
         final Task<Void> readyTask = PluginLoaderAPI.ready(Main.class);
         PluginLoaderAPI.getLogger().debug("Before the task: " + readyTask.toJson());
         readyTask.complete();
+
+        // Wait while the api is not completely loaded !
+        while(!PluginLoaderAPI.finishedLoading()) ;
+
         PluginLoaderAPI.getLogger().debug("After the task: " + readyTask.toJson());
 
-        Thread.sleep(5000L);
+        // Wait some time doesn't make any problem.
+        // Thread.sleep(5000L);
         PluginLoaderAPI.getLogger().info("TestPluginLoader json: " + testPluginLoader.toJson());
         PluginLoaderAPI.getLogger().info("AnotherPluginLoader json: " + anotherPluginLoader.toJson());
+
+        // Reloading plugins
+        PluginLoaderAPI.getLogger().info("Reloading plugin loaders:");
+        PluginLoaderAPI.reloadPluginLoader(testPluginLoader).complete();
+        PluginLoaderAPI.reloadPluginLoader(anotherPluginLoader).complete();
     }
 }

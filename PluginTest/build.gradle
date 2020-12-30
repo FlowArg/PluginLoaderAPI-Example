@@ -4,3 +4,7 @@ task deploy(dependsOn: build) {
         into "$rootDir/plugins/"
     }
 }
+
+dependencies {
+    compileOnly parent
+}

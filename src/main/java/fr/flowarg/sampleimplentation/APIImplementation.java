@@ -16,9 +16,9 @@ public class APIImplementation implements IAPI
     }
 
     @Override
-    public Supplier<Object> subAPI()
+    public Supplier<IAPI> subAPI()
     {
-        return () -> this.randomUUID;
+        return () -> () -> this.randomUUID;
     }
 
     @Override
