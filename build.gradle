@@ -21,7 +21,6 @@ allprojects {
 
     dependencies {
         implementation 'com.google.code.gson:gson:2.8.6'
-        api 'fr.flowarg:flowmultitools:1.2.+'
-        api 'com.github.FlowArg:PluginLoaderAPI:604fcd3'
+        api 'com.github.FlowArg:PluginLoaderAPI:94e88e0'
     }
 }
